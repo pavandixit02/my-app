@@ -10,7 +10,7 @@ jobs:
 
     steps:
       - name: Checkout Code
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
 
       - name: Deploy to EC2
         uses: appleboy/ssh-action@master
@@ -19,7 +19,32 @@ jobs:
           username: ${{ secrets.USERNAME }}
           key: ${{ secrets.EC2_SSH_KEY }}
           script: |
+            # Fix ownership (avoids FETCH_HEAD permission error)
+            sudo chown -R ubuntu:ubuntu /home/ubuntu/my-app
+
             cd /home/ubuntu/my-app
+
+            # Load NVM (CRITICAL)
+            export NVM_DIR="$HOME/.nvm"
+            source "$NVM_DIR/nvm.sh"
+
+            # Use Node 24
+            nvm use 24
+
+            # Verify (for logs/debug)
+            node -v
+            npm -v
+            pm2 -v
+
+            # Pull latest code
             git pull origin main
+
+            # Install dependencies
             npm install
-            pm2 restart all
+
+            # Restart app
+            pm2 restart my-app || pm2 start app.js --name my-app
+
+            # Save PM2 process list
+            pm2 save
+
