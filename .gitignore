@@ -23,3 +23,15 @@ dist-ssr
 *.sln
 *.sw?
 mykey.pem
+
+.bash_history
+.bash_logout
+.bashrc
+.cache/
+.lesshst
+.npm/
+.nvm/
+.pm2/
+.profile
+.ssh/
+.sudo_as_admin_successful

@@ -17,6 +17,9 @@
   "bugs": {
     "url": "https://github.com/pavandixit02/my-app/issues"
   },
+  "engines": {
+    "node": ">=24"
+  },
   "homepage": "https://github.com/pavandixit02/my-app#readme",
   "dependencies": {
     "express": "^5.2.1"
