@@ -1,17 +1,25 @@
-name: Test SSH Connection
+name: Deploy Node App
 
 on:
   push:
     branches: ["main"]
 
 jobs:
-  test-ssh:
+  deploy:
     runs-on: ubuntu-latest
+
     steps:
-      - name: SSH Test
+      - name: Checkout Code
+        uses: actions/checkout@v2
+
+      - name: Deploy to EC2
         uses: appleboy/ssh-action@master
         with:
           host: ${{ secrets.HOST_DNS }}
           username: ${{ secrets.USERNAME }}
           key: ${{ secrets.EC2_SSH_KEY }}
-          script: echo "Connected successfully"
+          script: |
+            cd /home/ubuntu/my-app
+            git pull origin main
+            npm install
+            pm2 restart all
