@@ -2,11 +2,7 @@ const express = require("express");
 const app = express();
 
 app.get("/", (req, res) => {
-  res.send("Hello CI/CD Pipeline\n");
-});
-
-app.get("/", (req,res) =>{
-  res.send("this is demo of CID piepline working work application");
+  res.send("Hello CI/CD Pipeline\n this is demo cicd pipeline example with yml configurations on github");
 });
 
 app.listen(3000, "0.0.0.0", () => {
